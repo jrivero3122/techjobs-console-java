@@ -20,6 +20,8 @@ public class JobData {
     private static Boolean isDataLoaded = false;
 
     private static ArrayList<HashMap<String, String>> allJobs;
+    private static String value;
+    private static String column;
 
     /**
      * Fetch list of all values from loaded data,
@@ -83,6 +85,31 @@ public class JobData {
 
         return jobs;
     }
+
+    public static ArrayList<HashMap<String, String>> findByValue(String value) {
+
+        // load data, if not already loaded
+        loadData();
+
+        value = value.toLowerCase();
+
+        ArrayList<HashMap<String, String>> jobs = new ArrayList<>();
+
+        String[] Allcolumn = {"location", "employer", "position type", "core competency"};
+
+        for (HashMap<String, String> row : allJobs) {
+            for(String column : Allcolumn){
+                String aValue = row.get(column).toLowerCase();
+                if (aValue.contains(value)) {
+                    jobs.add(row);
+                }
+            }
+        }
+
+        return jobs;
+
+    }
+
 
     /**
      * Read in data from a CSV file and store it in a list
